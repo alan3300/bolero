@@ -1,0 +1,5 @@
+.vscode
+output
+include
+lib
+src/main.o
