@@ -28,7 +28,5 @@ class Pelota
     
     int inicio;
     bool sentido;
-    
-        
 
 };

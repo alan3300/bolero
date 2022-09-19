@@ -1,11 +1,12 @@
 #include <iostream>
-#include <ctime>
+#include <random>
 #include <ncurses.h>
 #include <string>
 #include <stdlib.h>
 
 #include "objetos.h"
 #include "dibujos.h"
+
 
 using namespace std;
 
@@ -30,10 +31,10 @@ enum teclado
 {
 	PALETA1_ARRIBA = KEY_UP,
 	PALETA1_ABAJO = KEY_DOWN,
-	PALETA2_ARRIBA = 119,
-	PALETA2_ABAJO = 115,
+	PALETA2_ARRIBA = 119, // w
+	PALETA2_ABAJO = 115, // s
 	PAUSA,
-	SALIR = 27,
+	SALIR = 27, // esc
 	NIVEL_1,
 	NIVEL_2,
 	NIVEL_3
@@ -42,8 +43,19 @@ enum teclado
 const int PARCOLOR_FONDO = 1;
 
 
-
 //----------------------------------------------------------------------------------
+
+
+int random_bool()
+{
+
+	int s{};
+	srand(time(0));
+	s = rand() % 2;
+	return s;
+}
+
+
 
 
 void setup()
@@ -57,7 +69,7 @@ void setup()
 	start_color();
 
 	game_over = false;
-	juego_activo = false;
+	juego_activo = true;
 	puntaje = 0;
 
 	jugador1.x = 10;
@@ -68,6 +80,7 @@ void setup()
 
 	pelota.x = 20;
 	pelota.y = 60;
+	pelota.sentido = random_bool();
 
 
 	//Verificar si la terminal soporta colores
@@ -94,13 +107,17 @@ void input(){
 
 	switch (tecla)
 	{
-		case KEY_UP:
+		case PALETA1_ARRIBA:
+			jugador1.x++;
 			break;
-		case KEY_DOWN:
+		case PALETA1_ABAJO:
+			jugador1.x--;
 			break;
-		case 'w':
+		case PALETA2_ARRIBA:
+			jugador2.x++;
 			break;
-		case 's':
+		case PALETA2_ABAJO:
+			jugador2.x--;
 			break;
 		case 27:
 			salir = TRUE;
@@ -111,12 +128,59 @@ void input(){
 }
 
 
+bool colision_borde()
+{
+  if (pelota.x == ALTO || pelota.x == 0)
+  	return TRUE;
+
+  if (pelota.y == ANCHO || pelota.y == 0)
+  	return TRUE;
+
+  return FALSE;
+}
+
+
+bool colision_paleta()
+{
+
+
+}
+
+
+bool anotacion()
+{
+
+
+
+}
+
+
 //----------------------------------------------------------
 void update(){
 
 	jugador1.update();
 	jugador2.update();
 	pelota.update();
+
+	if (colision_borde())
+	{
+
+
+
+	}
+
+
+	if (colision_paleta())
+	{
+
+	}
+
+	if (anotacion())
+	{
+
+
+
+	}
 
 }
 
@@ -183,6 +247,12 @@ void input_menu()
 
 int main()
 {
+
+	// int r = random_bool();
+	// endwin();
+	// printf("random bool: %d\n\n", r);
+	// exit(1);
+
 	setup();
 
 	while(!salir) 
@@ -204,7 +274,6 @@ int main()
 			update();
 			draw();
 		}
-
 	}
 
 	endwin();
