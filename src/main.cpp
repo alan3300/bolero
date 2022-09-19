@@ -17,9 +17,9 @@ const int PAR_FONDO = 1;
 bool game_over, salir, juego_activo;
 int puntaje;
 
-Paleta paleta1 = Paleta(0,0);
-Paleta paleta2 = Paleta(120,0);
-Pelota pelota = Pelota(60,60);
+Paleta jugador1 = Paleta();
+Paleta jugador2 = Paleta();
+Pelota pelota = Pelota();
 
 void setup();
 void input();
@@ -57,7 +57,17 @@ void setup()
 	start_color();
 
 	game_over = false;
+	juego_activo = false;
 	puntaje = 0;
+
+	jugador1.x = 10;
+	jugador1.y = 4;
+
+	jugador2.x = 10;
+	jugador2.y = ANCHO - 4;
+
+	pelota.x = 20;
+	pelota.y = 60;
 
 
 	//Verificar si la terminal soporta colores
@@ -84,20 +94,19 @@ void input(){
 
 	switch (tecla)
 	{
-	case KEY_UP:
-		break;
-	case KEY_DOWN:
-		break;
-	case KEY_LEFT:
-		break;
-	case KEY_RIGHT:
-		break;
-	case 27:
-		salir = TRUE;
-		break;
-	case 'e':
-	default:
-		break;
+		case KEY_UP:
+			break;
+		case KEY_DOWN:
+			break;
+		case 'w':
+			break;
+		case 's':
+			break;
+		case 27:
+			salir = TRUE;
+			break;
+		default:
+			break;
 	}
 }
 
@@ -105,27 +114,37 @@ void input(){
 //----------------------------------------------------------
 void update(){
 
-
-
+	jugador1.update();
+	jugador2.update();
+	pelota.update();
 
 }
 
 //----------------------------------------------------------
-void draw()
+
+
+void marco()
 {
     	attron(COLOR_PAIR(PAR_FONDO));
 		box(stdscr, 0, 0);
-		mvprintw(0, 5, "[PUNTOS: %d     ]", puntaje);
-		
-		for (int y = 1; y < ALTO - 1; y++)
-		{
-			mvhline(y, 1, ' ', ANCHO - 2);
-		}
-
+		mvprintw(0, 5, "[PUNTOS: %d  ]", puntaje);
+		mvprintw(0, ANCHO - 18, "[PUNTOS: %d  ]", puntaje);
 		attroff(COLOR_PAIR(PAR_FONDO));
 		refresh();
-		delay_output(DELAY);
+}
+
+
+void draw()
+{
+	marco();
+	jugador1.draw();
+	jugador2.draw();
+	pelota.draw();
+	delay_output(DELAY);
 };
+
+
+
 
 void menu()
 {
@@ -174,8 +193,13 @@ int main()
 			menu();
 		}
 
+		jugador1.setup();
+		jugador2.setup();
+		pelota.setup();
 		while (!game_over)
 		{
+
+
 			input();
 			update();
 			draw();

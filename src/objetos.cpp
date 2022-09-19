@@ -1,9 +1,15 @@
 #include "objetos.h"
 
-Paleta::Paleta(int x, int y)
+
+Paleta::Paleta()
 {
-  p_x = x;
-  p_x = y;
+
+}
+
+
+void Paleta::setup()
+{
+  largo = 4;
 }
 
 void Paleta::update()
@@ -14,29 +20,33 @@ void Paleta::update()
 
 void Paleta::draw()
 {
-
-
+  for (int i = 0 ; i < largo; ++i)
+    {
+      mvaddch(x + i, y, '|');
+    }  
 }
 
 
 ///////////////////////////////////////////////////////////////////////////
 
-
-
-Pelota::Pelota(int x, int y)
+Pelota::Pelota()
 {
-  p_x = x;
-  p_y = y;
+
+}
+
+
+
+void Pelota::setup()
+{
+
 }
 
 void Pelota::update()
 {
 
-
 }
 
 void Pelota::draw()
 {
-
-
+  mvaddch(x, y, 'o');
 }

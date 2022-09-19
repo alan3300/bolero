@@ -2,4 +2,4 @@
 output
 include
 lib
-src/main.o
+*.o

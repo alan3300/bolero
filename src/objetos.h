@@ -6,12 +6,13 @@
 class Paleta
 {
   public:
-    Paleta(int x, int y);
+    Paleta();
+    void setup();
     void update();
     void draw();
 
-  private:
-    int p_x, p_y;
+    int x, y, puntaje, largo;
+    bool saque;
 };
 
 
@@ -19,11 +20,15 @@ class Pelota
 {
 
   public:
-    Pelota(int x, int y);
+    Pelota();
+    void setup();
     void update();
     void draw();
-
-  private:
-    int p_x, p_y;
+    int x, y;
+    
+    int inicio;
+    bool sentido;
+    
+        
 
 };
